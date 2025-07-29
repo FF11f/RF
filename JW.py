@@ -6,15 +6,15 @@ import shap
 import matplotlib.pyplot as plt
 
 # 加载保存的随机森林模型
-model = joblib.load('rf.pkl')
+model = joblib.load('lgbm.pkl')
 
 # 特征范围定义（根据提供的特征范围和数据类型）
 feature_ranges = {
     "Patient activation level": {"type": "categorical", "options": [0, 1], "default": 0},
-    "BMI": {"type": "categorical", "options": [0, 1], "default": 1},
+    "BMI": {"type": "categorical", "options": [0, 1], "default": 1}
     "Operation Time": {"type": "numerical", "min": 1.0, "max": 1000.0, "default": 240},
-    "CNLC stage": {"type": "categorical", "options": [0, 1], "default": 0},
-    "AST": {"type": "numerical", "min": 0, "max": 1000, "default": 24}
+    "Platelet": {"type":"numerical", "min": 0, "max": 1000, "default": 200}
+    "ALB": {"type": "numerical", "min": 0, "max": 1000, "default": 35},
 }
 
 # Streamlit 界面
@@ -51,7 +51,7 @@ if st.button("Predict"):
     probability = predicted_proba[predicted_class] * 100
 
     # 显示预测结果，使用 Matplotlib 渲染指定字体
-    text = f"Based on feature values, predicted possibility of Readmission is {probability:.2f}%"
+    text = f"Based on feature values, predicted possibility of AKI is {probability:.2f}%"
     fig, ax = plt.subplots(figsize=(8, 1))
     ax.text(
         0.5, 0.5, text,
